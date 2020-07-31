@@ -1,0 +1,36 @@
+{
+  "name": "node-corejs-cli",
+  "version": "0.0.0",
+  "description": "none",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./internals/scripts/dev.js",
+    "dev:auto": "node ./internals/scripts/dev.auto.js",
+    "clear": "node ./internals/scripts/clear.js",
+    "build": "webpack --config ./internals/webpack/webpack.prod.conf.js",
+    "start": "webpack --progress --config ./internals/webpack/webpack.dev.conf.js"
+  },
+  "author": "Douzi",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dayjs": "^1.8.34",
+    "multer": "^1.4.2",
+    "node-corejs": "^0.0.21"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^7.0.2",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "node-notifier": "^8.0.0",
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
+    "source-map-support": "^0.5.19",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^2.5.2"
+  }
+}
