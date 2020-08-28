@@ -3,11 +3,11 @@
  * 
  * Made By Douzi＂
  */
- /**
-  * 附加路由的高阶函数(装饰器)
-  * @param {String} routePath - 路由维度的基础请求路径
-  * @param {[Middleware]} middlewares - 路由维度的基础中间件列表
-  */
+/**
+ * 附加路由的高阶函数(装饰器)
+ * @param {String} routePath - 路由维度的基础请求路径
+ * @param {[Middleware]} middlewares - 路由维度的基础中间件列表
+ */
 export function withRouter(routePath, middlewares) {
   // 对期望设置的公共routePath进行处理
   // 去除开头多余和结尾的所有/
@@ -25,11 +25,9 @@ export function withRouter(routePath, middlewares) {
     }
 
     // 组合路由级别的中间件和原始中间件
-    getMiddlewares(req, res) {
-      return new Promise(async (resolve) => {
-        const originMiddlewares = await super.getMiddlewares(req, res);
-        resolve([...middlewares, ...originMiddlewares]);
-      });
+    async getMiddlewares(req, res) {
+      const originMiddlewares = await super.getMiddlewares(req, res);
+      return [...middlewares, ...originMiddlewares];
     }
   };
 }
