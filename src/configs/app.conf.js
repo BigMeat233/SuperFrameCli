@@ -27,7 +27,7 @@ export default ({ processId }) => ({
     // Worker进程数量
     workerNum: 1,
     // handler日志配置
-    handlerLoggerConf: { level: 'infos' },
+    handlerLoggerConf: { level: 'all' },
     // 资源目录
     resourcePath: path.resolve(execPath, './static/resource'),
     // 日志收集基础配置

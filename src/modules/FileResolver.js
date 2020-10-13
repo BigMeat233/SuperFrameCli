@@ -4,6 +4,7 @@
  * Made By Douzi＂
  */
 import fs from 'fs';
+import util from 'util';
 import path from 'path';
 import Core from 'node-corejs';
 import StateCenter from '@utils/StateCenter';
@@ -38,7 +39,7 @@ class FileResolver {
 
     // 进行写入
     this.log('t', funcName, '文件系统中不存在同名文件,开始进行写入...');
-    const err = await this._saveFile(filePath, buffer).catch((err) => err);
+    const err = await this._saveFile(filePath, buffer);
     if (!err) {
       this.log('i', funcName, '文件存储成功');
       return fileName;
@@ -58,7 +59,7 @@ class FileResolver {
 
     // 删除文件
     const filePath = path.resolve(this.sourcePath, fileName);
-    const err = await this._removeFile(filePath).catch((err) => err);
+    const err = await this._removeFile(filePath);
     if (!err) {
       this.log('i', funcName, '文件删除成功');
       return fileName;
@@ -91,10 +92,8 @@ class FileResolver {
    * 检查文件是否存在
    * @param {String} filePath - 文件绝对路径
    */
-  _isFileExists(filePath) {
-    return new Promise((resolve) => {
-      fs.access(filePath, (err) => resolve(!err));
-    });
+  async _isFileExists(filePath) {
+    return !await util.promisify(fs.access)(filePath).catch((err) => err);
   }
 
   /**
@@ -102,30 +101,24 @@ class FileResolver {
    * @param {String} filePath - 文件绝对路径
    * @param {Buffer} buffer - 文件buffer
    */
-  _saveFile(filePath, buffer) {
-    return new Promise((resolve, reject) => {
-      fs.writeFile(filePath, buffer, (err) => err ? reject(err) : resolve());
-    });
+  async _saveFile(filePath, buffer) {
+    return await util.promisify(fs.writeFile)(filePath, buffer).catch((err) => err);
   }
 
   /**
    * 从本地文件系统删除文件
    * @param {String} filePath - 文件绝对路径
    */
-  _removeFile(filePath) {
-    return new Promise((resolve, reject) => {
-      fs.unlink(filePath, (err) => err ? reject(err) : resolve());
-    });
+  async _removeFile(filePath) {
+    return await util.promisify(fs.unlink)(filePath).catch((err) => err);
   }
 
   /**
    * 读取本地文件系统中的文件列表
    * @param {String} dirPath - 目录绝对路径
    */
-  _readFileList(dirPath) {
-    return new Promise((resolve, reject) => {
-      fs.readdir(dirPath, (err, files) => err ? reject(err) : resolve(files));
-    });
+  async _readFileList(dirPath) {
+    return await util.promisify(fs.readdir)(dirPath);
   }
 
   log(...args) {

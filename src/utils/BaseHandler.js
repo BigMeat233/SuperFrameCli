@@ -19,7 +19,7 @@ class BaseHandler extends Core.Handler {
    * Handler初始化
    * @override
    */
-  initHandler(req) {
+  initHandler(req, res, next) {
     // 准备请求基础数据
     const { method, baseUrl } = req;
     const reqDirPath = path.dirname(baseUrl);
@@ -47,6 +47,7 @@ class BaseHandler extends Core.Handler {
       }
     });
     this.logger.start();
+    next();
   }
 
   /**

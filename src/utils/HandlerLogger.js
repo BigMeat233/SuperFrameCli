@@ -33,9 +33,7 @@ class HandlerLogger extends Core.GroupLogger {
   onStart() {
     // 尝试执行原始启动逻辑
     // 在原始启动逻辑执行失败时不再执行后续逻辑
-    if (!super.onStart()) {
-      return false;
-    }
+    super.onStart();
 
     // 启动成功时记录启动时间并输出开始日志
     this.startTime = new Date();
@@ -46,7 +44,6 @@ class HandlerLogger extends Core.GroupLogger {
         timestamp: this._formatDate(this.startTime)
       })
     );
-    return true;
   }
 
   /**
@@ -69,7 +66,7 @@ class HandlerLogger extends Core.GroupLogger {
     }
 
     // 执行原始的关闭逻辑
-    return super.onClose();
+    super.onClose();
   }
 
   /**

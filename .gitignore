@@ -11,8 +11,8 @@ package-lock.json
 # 打包相关
 dist
 */dist
-.dev_cache
-*/.dev_cache
+.cli-cache
+*/.cli-cache
 
 # 其他目录
 .DS_Store

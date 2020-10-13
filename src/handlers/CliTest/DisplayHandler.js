@@ -16,7 +16,7 @@ import { APP_STATE_FIELD_KEY_CONF } from '@constants/Macros';
  */
 class DisplayHandler extends BaseHandler {
   /**
-   * 设置请求路径
+   * 请求路径
    * @override
    */
   static getRoutePath() {
@@ -24,7 +24,7 @@ class DisplayHandler extends BaseHandler {
   }
 
   /**
-   * Handler中间件列表
+   * 中间件列表
    * @override
    */
   getMiddlewares() {

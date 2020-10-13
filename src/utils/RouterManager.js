@@ -21,7 +21,8 @@ export function withRouter(routePath, middlewares) {
     static getRoutePath() {
       // 修正原始的routePath
       const originRoutePath = Handler.getRoutePath().replace(/^\/*/g, '');
-      return `${routePath}/${originRoutePath}`;
+      const targetRoutePath = `${routePath}/${originRoutePath}`.replace(/^\/*/g, '/');
+      return targetRoutePath;
     }
 
     // 组合路由级别的中间件和原始中间件

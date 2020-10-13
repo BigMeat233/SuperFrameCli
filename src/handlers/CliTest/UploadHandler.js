@@ -22,16 +22,7 @@ class UploadHandler extends BaseHandler {
   }
 
   /**
-   * Handler初始化
-   * @override
-   */
-  initHandler(req, res) {
-    super.initHandler(req, res);
-    this.fileResolver = new FileResolver(this.logger);
-  }
-
-  /**
-   * Handler中间件列表
+   * 中间件列表
    * @override
    */
   getMiddlewares() {
@@ -40,6 +31,15 @@ class UploadHandler extends BaseHandler {
       files: 1,
       fileSize: 2 * 1024 * 1024,
     })];
+  }
+
+  /**
+   * 预处理
+   * @override
+   */
+  preHandler(req, res, next) {
+    this.fileResolver = new FileResolver(this.logger);
+    next();
   }
 
   /**
@@ -56,9 +56,7 @@ class UploadHandler extends BaseHandler {
       return;
     }
     // 执行业务操作
-    const fileNameInFs = await this.fileResolver.saveFile(fileName, file.buffer).catch((err) => {
-      next(this.buildFailureMessage(err.message));
-    });
+    const fileNameInFs = await this.fileResolver.saveFile(fileName, file.buffer);
     fileNameInFs && next(this.buildSuccessMessage('文件存储成功', { fileNameInFs }));
   }
 }

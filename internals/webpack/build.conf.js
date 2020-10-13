@@ -11,21 +11,21 @@ const resolve = (filePath) => path.resolve(execPath, filePath);
 
 module.exports = {
   dev: {
+    devTool: 'source-map',
     entry: resolve('./index.dev.js'),
     target: {
       node: '8',
-      path: resolve('./.dev_cache'),
+      path: resolve('./.cli-cache'),
       fileName: 'index.js',
-    },
-    devTool: 'source-map'
+    }
   },
   prod: {
+    devTool: false,
     entry: resolve('./index.js'),
     target: {
       node: '8',
       path: resolve('./dist'),
       fileName: 'index.js',
-    },
-    devTool: 'none'
+    }
   }
 };

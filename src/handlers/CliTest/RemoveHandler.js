@@ -13,7 +13,7 @@ import FileResolver from '@modules/FileResolver';
  */
 class RemoveHandler extends BaseHandler {
   /**
-   * 设置请求路径
+   * 请求路径
    * @override
    */
   static getRoutePath() {
@@ -21,12 +21,12 @@ class RemoveHandler extends BaseHandler {
   }
 
   /**
-   * Handler初始化
+   * 预处理
    * @override
    */
-  initHandler(req, res) {
-    super.initHandler(req, res);
+  preHandler(req, res, next) {
     this.fileResolver = new FileResolver(this.logger);
+    next();
   }
 
   /**
@@ -42,9 +42,7 @@ class RemoveHandler extends BaseHandler {
     }
 
     // 执行业务操作
-    const fileNameInFs = await this.fileResolver.removeFile(fileName).catch((err) => {
-      next(this.buildFailureMessage(err.message));
-    });
+    const fileNameInFs = await this.fileResolver.removeFile(fileName);
     fileNameInFs && next(this.buildSuccessMessage('删除成功', { fileNameInFs }));
   }
 }

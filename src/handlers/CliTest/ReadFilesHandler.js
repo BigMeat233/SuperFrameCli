@@ -13,7 +13,7 @@ import FileResolver from '@modules/FileResolver';
  */
 class ReadFilesHandler extends BaseHandler {
   /**
-   * 设置请求路径
+   * 请求路径
    * @override
    */
   static getRoutePath() {
@@ -21,12 +21,12 @@ class ReadFilesHandler extends BaseHandler {
   }
 
   /**
-   * Handler初始化
+   * 预处理
    * @override
    */
-  initHandler(req, res) {
-    super.initHandler(req, res);
+  preHandler(req, res, next) {
     this.fileResolver = new FileResolver(this.logger);
+    next();
   }
 
   /**
@@ -35,9 +35,7 @@ class ReadFilesHandler extends BaseHandler {
    */
   async postHandler(req, res, next) {
     // 执行业务操作
-    const fileList = await this.fileResolver.readFiles().catch((err) => {
-      next(this.buildFailureMessage(err.message));
-    });
+    const fileList = await this.fileResolver.readFiles();
     fileList && next(this.buildSuccessMessage('读取成功', { fileList }));
   }
 }
